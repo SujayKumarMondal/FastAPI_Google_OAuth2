@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+python-dotenv
+httpx
+pydantic
+oauthlib
+requests
+jinja2
+python-jose
