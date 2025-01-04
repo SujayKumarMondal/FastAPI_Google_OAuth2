@@ -7,3 +7,5 @@ oauthlib
 requests
 jinja2
 python-jose
+fastapi_mail
+pyotp
