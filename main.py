@@ -69,7 +69,7 @@ async def root():
 async def login(request: Request):
     google_authorization_url = (
         f"https://accounts.google.com/o/oauth2/v2/auth?"
-        f"client_id={GOOGLE_CLIENT_ID}&response_type=code&scope=openid%20profile%20email&redirect_uri=http://127.0.0.1:3000/auth"
+        f"client_id={GOOGLE_CLIENT_ID}&response_type=code&scope=openid%20profile%20email&redirect_uri=https://accounts.google.com/o/oauth2/v2/auth?"
     )
     return RedirectResponse(google_authorization_url)
 
@@ -108,7 +108,10 @@ async def auth(code: str):
         # Create JWT token for the user
         jwt_token = create_access_token(data={"sub": user.email})
 
-        return {"email": user.email, "access_token": jwt_token, "token_type": "bearer"}
+        # Set a cookie or return the token in response
+        response = {"email": user.email, "access_token": jwt_token, "token_type": "bearer"}
+
+        return response
 
 # Function to create JWT access tokens
 def create_access_token(data: dict):
@@ -118,6 +121,13 @@ def create_access_token(data: dict):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
+# Logout route that invalidates the session and redirects to Google login
+@app.get("/logout")
+async def logout():
+    # For now, no need to clear cookies or session as we're just redirecting to Google login
+    google_signout_url = "https://accounts.google.com/Logout"
+    return RedirectResponse(url=google_signout_url)
 
 # Protected route that requires JWT token
 @app.get("/users/me", response_model=User)

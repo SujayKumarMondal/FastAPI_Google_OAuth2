@@ -37,6 +37,12 @@
         .btn:hover {
             background-color: #45a049;
         }
+        .logout-btn {
+            background-color: #f44336;
+        }
+        .logout-btn:hover {
+            background-color: #e53935;
+        }
     </style>
 </head>
 <body>
@@ -55,15 +61,12 @@
         <a href="{{ google_auth_url }}" target="_blank" class="btn">
             <i class="fab fa-google"></i> Login with Google
         </a>
-    </div>
 
-    <!-- JavaScript to Open the Page in a New Tab -->
-    <script>
-        window.onload = function() {
-            // Open the current page in a new tab automatically (optional)
-            window.open(window.location.href, "_blank");
-        }
-    </script>
+        <!-- Logout Button -->
+        <a href="/logout" target="_blank" class="btn">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>        
+    </div>
 
 </body>
 </html>
